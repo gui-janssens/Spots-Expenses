@@ -2,6 +2,7 @@ import 'models.dart';
 
 class Associate {
   final String id;
+  final String companyId;
   final String name;
   final num debt;
   final String? cpf;
@@ -10,6 +11,7 @@ class Associate {
 
   Associate(
     this.id,
+    this.companyId,
     this.name,
     this.debt,
     this.cpf,
@@ -19,6 +21,7 @@ class Associate {
 
   factory Associate.fromMap(Map<String, dynamic> map) => Associate(
         map['id'],
+        map['companyId'],
         map['name'],
         map['debt'],
         map['cpf'],
