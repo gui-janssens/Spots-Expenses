@@ -25,7 +25,7 @@ class Associate {
     dynamic map = document.data();
 
     return Associate(
-      map['id'],
+      document.id,
       map['companyId'],
       map['name'],
       map['debt'],

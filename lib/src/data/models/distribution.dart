@@ -14,7 +14,7 @@ class Distribution {
   factory Distribution.fromDocument(DocumentSnapshot document) {
     dynamic map = document.data();
     return Distribution(
-      map['id'],
+      document.id,
       DateTime.parse(map['dateTime']),
       map['totalDistributed'],
       List<IndividualDistributionDetails>.from(
@@ -23,5 +23,14 @@ class Distribution {
             .toList(),
       ),
     );
+  }
+
+  Map<Object, Object?> toMap() {
+    return {
+      'dateTime': dateTime.toIso8601String(),
+      'totalDistributed': totalDistributed,
+      'individualDistributionDetails':
+          individualDistributionDetails.map((i) => i.toMap()).toList(),
+    };
   }
 }

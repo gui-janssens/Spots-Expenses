@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:oxidized/oxidized.dart';
 
 import '../models/models.dart';
@@ -5,13 +8,17 @@ import '../models/models.dart';
 abstract class CompanyRepository {
   Future<Result<Company, AppError>> getCompany();
 
-  Future<Result<void, AppError>> editCompany(String companyId);
+  Future<Result<void, AppError>> editCompany(String companyId, Company company);
 
   Future<Result<List<Item>, AppError>> getItems(String companyId);
 
   Future<Result<void, AppError>> createItem(Item item);
 
-  Future<Result<void, AppError>> editItem(String itemId, Item item);
+  Future<Result<void, AppError>> editItem(
+    String companyId,
+    String itemId,
+    Item item,
+  );
 
   Future<Result<void, AppError>> deleteItem(String itemId);
 
@@ -20,7 +27,8 @@ abstract class CompanyRepository {
 
   Future<Result<void, AppError>> createDistribution(Distribution distribution);
 
-  Future<Result<void, AppError>> editDistributions(
+  Future<Result<void, AppError>> editDistribution(
+    String companyId,
     String distributionId,
     Distribution distribution,
   );
@@ -29,53 +37,19 @@ abstract class CompanyRepository {
 }
 
 class CompanyRepositoryImpl implements CompanyRepository {
+  final _firestore = FirebaseFirestore.instance;
+  final _collectionPath = 'company';
+  final _firebaseAppError = AppErrorCode.firestoreError;
+
   @override
-  Future<Result<void, AppError>> createDistribution(
-      Distribution distribution) async {
+  Future<Result<void, AppError>> createDistribution(Distribution distribution) {
+    // TODO: implement createDistribution
     throw UnimplementedError();
   }
 
   @override
   Future<Result<void, AppError>> createItem(Item item) {
     // TODO: implement createItem
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<Result<void, AppError>> editCompany(String companyId) {
-    // TODO: implement editCompany
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<Result<void, AppError>> editDistributions(
-      String distributionId, Distribution distribution) {
-    // TODO: implement editDistributions
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<Result<void, AppError>> editItem(String itemId, Item item) {
-    // TODO: implement editItem
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<Result<Company, AppError>> getCompany() {
-    // TODO: implement getCompany
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<Result<List<Distribution>, AppError>> getDistributions(
-      String companyId) {
-    // TODO: implement getDistributions
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<Result<List<Item>, AppError>> getItems(String companyId) {
-    // TODO: implement getItems
     throw UnimplementedError();
   }
 
@@ -89,5 +63,105 @@ class CompanyRepositoryImpl implements CompanyRepository {
   Future<Result<void, AppError>> deleteItem(String itemId) {
     // TODO: implement deleteItem
     throw UnimplementedError();
+  }
+
+  @override
+  Future<Result<void, AppError>> editCompany(
+      String companyId, Company company) {
+    // TODO: implement editCompany
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Result<void, AppError>> editDistribution(String companyId,
+      String distributionId, Distribution distribution) async {
+    try {
+      await _firestore
+          .collection(_collectionPath)
+          .doc(companyId)
+          .update(distribution.toMap());
+      return Result.ok(true);
+    } catch (e) {
+      log(e.toString());
+      return Result.err(
+        AppError(
+          errorCode: _firebaseAppError,
+          message: _firebaseAppError.message,
+        ),
+      );
+    }
+  }
+
+  @override
+  Future<Result<void, AppError>> editItem(
+      String companyId, String itemId, Item item) async {
+    try {
+      await _firestore
+          .collection(_collectionPath)
+          .doc(companyId)
+          .update(item.toMap());
+      return Result.ok(true);
+    } catch (e) {
+      log(e.toString());
+      return Result.err(
+        AppError(
+          errorCode: _firebaseAppError,
+          message: _firebaseAppError.message,
+        ),
+      );
+    }
+  }
+
+  @override
+  Future<Result<Company, AppError>> getCompany() async {
+    try {
+      final documents = await _firestore.collection(_collectionPath).get();
+      return Result.ok(Company.fromDocument(documents.docs[0]));
+    } catch (e) {
+      log(e.toString());
+      return Result.err(
+        AppError(
+          errorCode: _firebaseAppError,
+          message: _firebaseAppError.message,
+        ),
+      );
+    }
+  }
+
+  @override
+  Future<Result<List<Distribution>, AppError>> getDistributions(
+      String companyId) async {
+    try {
+      final document =
+          await _firestore.collection(_collectionPath).doc(companyId).get();
+      final company = Company.fromDocument(document);
+      return Result.ok(company.distributions);
+    } catch (e) {
+      log(e.toString());
+      return Result.err(
+        AppError(
+          errorCode: _firebaseAppError,
+          message: _firebaseAppError.message,
+        ),
+      );
+    }
+  }
+
+  @override
+  Future<Result<List<Item>, AppError>> getItems(String companyId) async {
+    try {
+      final document =
+          await _firestore.collection(_collectionPath).doc(companyId).get();
+      final company = Company.fromDocument(document);
+      return Result.ok(company.items);
+    } catch (e) {
+      log(e.toString());
+      return Result.err(
+        AppError(
+          errorCode: _firebaseAppError,
+          message: _firebaseAppError.message,
+        ),
+      );
+    }
   }
 }

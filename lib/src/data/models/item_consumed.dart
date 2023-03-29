@@ -11,7 +11,7 @@ class ItemConsumed {
   factory ItemConsumed.fromDocument(DocumentSnapshot document) {
     dynamic map = document.data();
     return ItemConsumed(
-      map['id'],
+      document.id,
       DateTime.parse(map['dateTime']),
       map['itemId'],
       map['valueThen'],

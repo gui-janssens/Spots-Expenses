@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:oxidized/oxidized.dart';
 
 import '../models/models.dart';
@@ -41,6 +42,8 @@ abstract class AssociatesRepository {
 }
 
 class AssociatesRepositoryImpl implements AssociatesRepository {
+  final _firestore = FirebaseFirestore.instance;
+
   @override
   Future<Result<void, AppError>> createItemConsumed(
       String associateId, ItemConsumed itemConsumed) {

@@ -11,7 +11,7 @@ class Loan {
     dynamic map = document.data();
 
     return Loan(
-      map['id'],
+      document.id,
       DateTime.parse(map['dateTime']),
       map['value'],
     );

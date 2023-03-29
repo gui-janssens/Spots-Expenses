@@ -23,7 +23,7 @@ class Company {
     dynamic map = document.data();
 
     return Company(
-      map['id'],
+      document.id,
       map['name'],
       map['cnpj'],
       map['items'],
@@ -31,4 +31,9 @@ class Company {
       map['distributions'],
     );
   }
+
+  Map<Object, Object?> toMap() {
+    return {};
+  }
 }
+// TODO: continue CompanyRepostory -> next impl = toMap on Company

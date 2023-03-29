@@ -25,6 +25,15 @@ class IndividualDistributionDetails {
       map['grossDistribution'],
       map['liquidDistribution'],
     );
-    ;
+  }
+
+  Map<Object, Object?> toMap() {
+    return {
+      'associateId': associateId,
+      'prolabore': prolabore,
+      'debtDeduction': debtDeduction,
+      'grossDistribution': grossDistribution,
+      'liquidDistribution': liquidDistribution,
+    };
   }
 }

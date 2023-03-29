@@ -11,10 +11,18 @@ class Item {
   factory Item.fromDocument(DocumentSnapshot document) {
     dynamic map = document.data();
     return Item(
-      map['id'],
+      document.id,
       map['name'],
       map['averagePrice'],
       map['quantity'],
     );
+  }
+
+  Map<Object, Object?> toMap() {
+    return {
+      'name': name,
+      'averagePrice': averagePrice,
+      'quantity': quantity,
+    };
   }
 }
