@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'models.dart';
 
 class Associate {
@@ -19,14 +21,19 @@ class Associate {
     this.loans,
   );
 
-  factory Associate.fromMap(Map<String, dynamic> map) => Associate(
-        map['id'],
-        map['companyId'],
-        map['name'],
-        map['debt'],
-        map['cpf'],
-        List<ItemConsumed>.from(
-            map['itemsConsumed'].map((i) => ItemConsumed.fromMap(i)).toList()),
-        List<Loan>.from(map['loans'].map((l) => Loan.fromMap(l)).toList()),
-      );
+  factory Associate.fromDocument(DocumentSnapshot document) {
+    dynamic map = document.data();
+
+    return Associate(
+      map['id'],
+      map['companyId'],
+      map['name'],
+      map['debt'],
+      map['cpf'],
+      List<ItemConsumed>.from(map['itemsConsumed']
+          .map((i) => ItemConsumed.fromDocument(i))
+          .toList()),
+      List<Loan>.from(map['loans'].map((l) => Loan.fromDocument(l)).toList()),
+    );
+  }
 }

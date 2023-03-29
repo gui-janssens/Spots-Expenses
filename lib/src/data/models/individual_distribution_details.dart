@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class IndividualDistributionDetails {
   final String associateId;
   final num prolabore;
@@ -13,12 +15,16 @@ class IndividualDistributionDetails {
     this.liquidDistribution,
   );
 
-  factory IndividualDistributionDetails.fromMap(Map<String, dynamic> map) =>
-      IndividualDistributionDetails(
-        map['associateId'],
-        map['prolabore'],
-        map['debtDeduction'],
-        map['grossDistribution'],
-        map['liquidDistribution'],
-      );
+  factory IndividualDistributionDetails.fromDocument(
+      DocumentSnapshot document) {
+    dynamic map = document.data();
+    return IndividualDistributionDetails(
+      map['associateId'],
+      map['prolabore'],
+      map['debtDeduction'],
+      map['grossDistribution'],
+      map['liquidDistribution'],
+    );
+    ;
+  }
 }

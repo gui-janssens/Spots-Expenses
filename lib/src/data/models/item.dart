@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class Item {
   final String id;
   final String name;
@@ -6,10 +8,13 @@ class Item {
 
   Item(this.id, this.name, this.averagePrice, this.quantity);
 
-  factory Item.fromMap(Map<String, dynamic> map) => Item(
-        map['id'],
-        map['name'],
-        map['averagePrice'],
-        map['quantity'],
-      );
+  factory Item.fromDocument(DocumentSnapshot document) {
+    dynamic map = document.data();
+    return Item(
+      map['id'],
+      map['name'],
+      map['averagePrice'],
+      map['quantity'],
+    );
+  }
 }

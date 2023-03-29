@@ -30,8 +30,8 @@ abstract class CompanyRepository {
 
 class CompanyRepositoryImpl implements CompanyRepository {
   @override
-  Future<Result<void, AppError>> createDistribution(Distribution distribution) {
-    // TODO: implement createDistribution
+  Future<Result<void, AppError>> createDistribution(
+      Distribution distribution) async {
     throw UnimplementedError();
   }
 

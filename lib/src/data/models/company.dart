@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'models.dart';
 
 class Company {
@@ -16,4 +18,17 @@ class Company {
     this.grossIndividualDistribution,
     this.distributions,
   );
+
+  factory Company.fromDocument(DocumentSnapshot document) {
+    dynamic map = document.data();
+
+    return Company(
+      map['id'],
+      map['name'],
+      map['cnpj'],
+      map['items'],
+      map['grossIndividualDistribution'],
+      map['distributions'],
+    );
+  }
 }
