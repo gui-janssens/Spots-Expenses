@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "961303264927",
+    "project_id": "spots-expenses",
+    "storage_bucket": "spots-expenses.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:961303264927:android:1db5c271fe48c7b7e62caa",
+        "android_client_info": {
+          "package_name": "com.example.spots_expenses"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "961303264927-7cmghkdc48et6o2op8esoid29k2qve3l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDEpWHEjLYbmH_ImbQk0gLzwPot1ShXnPs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "961303264927-7cmghkdc48et6o2op8esoid29k2qve3l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
