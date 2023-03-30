@@ -1,0 +1,47 @@
+{
+  "Create Reactive ViewModelBuilder Stateless Widget": {
+    "prefix": "reactive",
+    "scope": "dart",
+    "body": [
+      "import 'package:flutter/material.dart';",
+      "import 'package:stacked/stacked.dart';",
+
+      "class $1 extends StatelessWidget {",
+      "  static const route = '$2';",
+      "",
+      "  @override",
+      "  Widget build(BuildContext context) {",
+      "       return ViewModelBuilder<$1Model>.reactive(",
+      "       viewModelBuilder: () => $1Model(),",
+      "       builder: (context, viewModel, child) => Scaffold(",
+      "           body: Container()",
+      "           ),",
+      "        );",
+      "     }",
+      "}"
+    ]
+  },
+
+  "Create Non-Reactive ViewModelBuilder Stateless Widget": {
+    "prefix": "nonreactive",
+    "scope": "dart",
+    "body": [
+      "import 'package:flutter/material.dart';",
+      "import 'package:stacked/stacked.dart';",
+
+      "class $1 extends StatelessWidget {",
+      "  static const route = '$2';",
+      "",
+      "  @override",
+      "  Widget build(BuildContext context) {",
+      "       return ViewModelBuilder<$1Model>.nonReactive(",
+      "       viewModelBuilder: () => $1Model(),",
+      "       builder: (context, viewModel, child) => Scaffold(",
+      "           body: Container()",
+      "           ),",
+      "        );",
+      "     }",
+      "}"
+    ]
+  }
+}

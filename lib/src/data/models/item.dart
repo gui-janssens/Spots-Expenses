@@ -10,13 +10,15 @@ class Item {
 
   factory Item.fromDocument(DocumentSnapshot document) {
     dynamic map = document.data();
-    return Item(
-      document.id,
-      map['name'],
-      map['averagePrice'],
-      map['quantity'],
-    );
+    return Item.fromMap(map);
   }
+
+  factory Item.fromMap(Map<String, dynamic> map) => Item(
+        map['id'],
+        map['name'],
+        map['averagePrice'],
+        map['quantity'],
+      );
 
   Map<Object, Object?> toMap() {
     return {

@@ -13,17 +13,19 @@ class Distribution {
 
   factory Distribution.fromDocument(DocumentSnapshot document) {
     dynamic map = document.data();
-    return Distribution(
-      document.id,
-      DateTime.parse(map['dateTime']),
-      map['totalDistributed'],
-      List<IndividualDistributionDetails>.from(
-        map['individualDistributionDetails']
-            .map((i) => IndividualDistributionDetails.fromDocument(i))
-            .toList(),
-      ),
-    );
+    return Distribution.fromMap(map);
   }
+
+  factory Distribution.fromMap(Map<String, dynamic> map) => Distribution(
+        map['document.id'],
+        DateTime.parse(map['dateTime']),
+        map['totalDistributed'],
+        List<IndividualDistributionDetails>.from(
+          map['individualDistributionDetails']
+              .map((i) => IndividualDistributionDetails.fromDocument(i))
+              .toList(),
+        ),
+      );
 
   Map<Object, Object?> toMap() {
     return {

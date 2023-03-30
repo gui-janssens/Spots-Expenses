@@ -26,14 +26,20 @@ class Company {
       document.id,
       map['name'],
       map['cnpj'],
-      map['items'],
+      List<Item>.from(map['items'].map((i) => Item.fromMap(i)).toList()),
       map['grossIndividualDistribution'],
-      map['distributions'],
+      List<Distribution>.from(
+          map['distributions'].map((d) => Distribution.fromMap(d)).toList()),
     );
   }
 
   Map<Object, Object?> toMap() {
-    return {};
+    return {
+      'name': name,
+      'cnpj': cnpj,
+      'items': items.map((i) => i.toMap()),
+      'grossIndividualDistribution': grossIndividualDistribution,
+      'distributions': distributions.map((d) => d.toMap()),
+    };
   }
 }
-// TODO: continue CompanyRepostory -> next impl = toMap on Company
