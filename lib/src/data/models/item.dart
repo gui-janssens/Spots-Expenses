@@ -20,8 +20,9 @@ class Item {
         map['quantity'],
       );
 
-  Map<Object, Object?> toMap() {
+  Map<String, dynamic> toMap() {
     return {
+      'id': id,
       'name': name,
       'averagePrice': averagePrice,
       'quantity': quantity,

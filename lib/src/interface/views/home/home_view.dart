@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:sizer/sizer.dart';
 import 'package:stacked/stacked.dart';
 
 import '../../../data/providers/providers.dart';
-import '../../utility/utility.dart';
 import 'home_view_model.dart';
+import 'widgets/custom_app_bar.dart';
 
 class HomeView extends StatelessWidget {
   static const route = '/home';
@@ -14,19 +13,32 @@ class HomeView extends StatelessWidget {
     return ViewModelBuilder<HomeViewModel>.reactive(
       viewModelBuilder: () => HomeViewModel(),
       builder: (context, viewModel, child) => Scaffold(
-          appBar: AppBar(
-            backgroundColor: AppColors.primary,
-            actions: [
-              Hero(
-                tag: '1',
-                child: Image.asset(
-                  'assets/images/spots_white.png',
-                  width: SizerUtil.width / 5,
-                ),
+          appBar: CustomAppBar(viewModel),
+          body: IndexedStack(
+            index: viewModel.selectedIndex,
+            children: [
+              Center(
+                child: Text(
+                    '${CompanyProvider.instance.company.name} ${viewModel.companyViewIsExpenses ? 'expenses' : 'accounting'}'),
+              ),
+              SizedBox(
+                height: double.infinity,
+                width: double.infinity,
+                child: Center(
+                    child:
+                        Text(AssociatesProvider.instance.associates[0].name)),
+              ),
+              Center(
+                child: Text(AssociatesProvider.instance.associates[1].name),
+              ),
+              Center(
+                child: Text(AssociatesProvider.instance.associates[2].name),
+              ),
+              Center(
+                child: Text(AssociatesProvider.instance.associates[3].name),
               ),
             ],
-          ),
-          body: Center(child: Text(CompanyProvider.instance.company.name))),
+          )),
     );
   }
 }

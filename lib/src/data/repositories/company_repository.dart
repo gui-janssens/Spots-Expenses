@@ -52,11 +52,9 @@ class CompanyRepositoryImpl implements CompanyRepository {
   Future<Result<Company, AppError>> getCompany() async {
     try {
       final documents = await _firestore.collection(_collectionPath).get();
-      print(documents.docs[0].data());
       return Result.ok(Company.fromDocument(documents.docs[0]));
     } catch (e) {
       log(e.toString());
-      print(e);
       return Result.err(
         AppError(
           errorCode: _firebaseAppError,

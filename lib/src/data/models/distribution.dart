@@ -17,7 +17,7 @@ class Distribution {
   }
 
   factory Distribution.fromMap(Map<String, dynamic> map) => Distribution(
-        map['document.id'],
+        map['id'],
         DateTime.parse(map['dateTime']),
         map['totalDistributed'],
         List<IndividualDistributionDetails>.from(
@@ -27,8 +27,9 @@ class Distribution {
         ),
       );
 
-  Map<Object, Object?> toMap() {
+  Map<String, dynamic> toMap() {
     return {
+      'id': id,
       'dateTime': dateTime.toIso8601String(),
       'totalDistributed': totalDistributed,
       'individualDistributionDetails':

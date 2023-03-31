@@ -11,9 +11,15 @@ final goRouter = GoRouter(
   redirect: (context, state) async {
     if (state.location == SplashView.route) return null;
 
-    await CompanyProvider.instance.getCompany();
+    try {
+      await CompanyProvider.instance.getCompany();
 
-    return null;
+      await AssociatesProvider.instance.getAssociates();
+
+      return null;
+    } catch (_) {
+      return SplashView.route;
+    }
   },
   observers: [
     BotToastNavigatorObserver(),

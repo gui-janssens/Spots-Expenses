@@ -9,6 +9,8 @@ class Company {
   final List<Item> items;
   final num grossIndividualDistribution;
   final List<Distribution> distributions;
+  final List<ItemConsumed> itemsConsumed;
+  final List<Loan> loans;
 
   Company(
     this.id,
@@ -17,6 +19,8 @@ class Company {
     this.items,
     this.grossIndividualDistribution,
     this.distributions,
+    this.itemsConsumed,
+    this.loans,
   );
 
   factory Company.fromDocument(DocumentSnapshot document) {
@@ -30,16 +34,22 @@ class Company {
       map['grossIndividualDistribution'],
       List<Distribution>.from(
           map['distributions'].map((d) => Distribution.fromMap(d)).toList()),
+      List<ItemConsumed>.from(map['itemsConsumed']
+          .map((i) => ItemConsumed.fromDocument(i))
+          .toList()),
+      List<Loan>.from(map['loans'].map((l) => Loan.fromDocument(l)).toList()),
     );
   }
 
-  Map<Object, Object?> toMap() {
+  Map<String, dynamic> toMap() {
     return {
       'name': name,
       'cnpj': cnpj,
-      'items': items.map((i) => i.toMap()),
+      'items': items.map((i) => i.toMap()).toList(),
       'grossIndividualDistribution': grossIndividualDistribution,
-      'distributions': distributions.map((d) => d.toMap()),
+      'distributions': distributions.map((d) => d.toMap()).toList(),
+      'itemsConsumed': itemsConsumed.map((i) => i.toMap()).toList(),
+      'loans': loans.map((l) => l.toMap()).toList(),
     };
   }
 }

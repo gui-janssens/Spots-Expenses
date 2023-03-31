@@ -27,7 +27,7 @@ class IndividualDistributionDetails {
     );
   }
 
-  Map<Object, Object?> toMap() {
+  Map<String, dynamic> toMap() {
     return {
       'associateId': associateId,
       'prolabore': prolabore,
