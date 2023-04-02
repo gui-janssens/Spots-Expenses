@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
 import '../../../data/providers/providers.dart';
+import '../views.dart';
 import 'home_view_model.dart';
 import 'widgets/custom_app_bar.dart';
 
@@ -17,10 +18,7 @@ class HomeView extends StatelessWidget {
           body: IndexedStack(
             index: viewModel.selectedIndex,
             children: [
-              Center(
-                child: Text(
-                    '${CompanyProvider.instance.company.name} ${viewModel.companyViewIsExpenses ? 'expenses' : 'accounting'}'),
-              ),
+              CompanyView(),
               SizedBox(
                 height: double.infinity,
                 width: double.infinity,
