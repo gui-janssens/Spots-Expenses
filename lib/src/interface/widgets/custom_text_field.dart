@@ -120,22 +120,22 @@ class CustomTextField extends StatelessWidget {
                     : null,
                 errorText: errorText,
                 suffixIconColor: Colors.green,
-                disabledBorder: UnderlineInputBorder(
-                  borderRadius: BorderRadius.circular(24),
+                disabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
                   borderSide: const BorderSide(
-                    color: Colors.transparent,
+                    color: Colors.grey,
                   ),
                 ),
-                enabledBorder: UnderlineInputBorder(
-                  borderRadius: BorderRadius.circular(24),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
                   borderSide: const BorderSide(
-                    color: Colors.transparent,
+                    color: Colors.grey,
                   ),
                 ),
-                focusedBorder: UnderlineInputBorder(
-                  borderRadius: BorderRadius.circular(24),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
                   borderSide: const BorderSide(
-                    color: Colors.transparent,
+                    color: Colors.grey,
                   ),
                 ),
                 fillColor: !enabled ? Colors.transparent : Colors.white,

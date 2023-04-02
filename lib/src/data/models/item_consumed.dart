@@ -1,18 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import 'models.dart';
-
 class ItemConsumed {
   final String id;
   final DateTime dateTime;
   final String associateId;
-  final Item item;
+  final String itemName;
   final num valueThen;
 
   ItemConsumed(
     this.id,
     this.dateTime,
-    this.item,
+    this.itemName,
     this.valueThen,
     this.associateId,
   );
@@ -22,7 +20,7 @@ class ItemConsumed {
     return ItemConsumed(
       map['id'],
       DateTime.parse(map['dateTime']),
-      Item.fromMap(map['item']),
+      map['itemName'],
       map['valueThen'],
       map['associateId'],
     );
@@ -32,7 +30,7 @@ class ItemConsumed {
     return {
       'id': id,
       'dateTime': dateTime.toIso8601String(),
-      'item': item.toMap(),
+      'itemName': itemName,
       'valueThen': valueThen,
       'associateId': associateId,
     };

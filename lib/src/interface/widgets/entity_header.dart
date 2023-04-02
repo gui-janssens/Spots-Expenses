@@ -14,8 +14,30 @@ class EntityHeader extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(title),
-        Text(documentNumber),
+        Row(
+          children: [
+            SizedBox(width: 7.5),
+            Text(
+              title,
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
+        Row(
+          children: [
+            Text(
+              documentNumber,
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(width: 7.5),
+          ],
+        ),
       ],
     );
   }

@@ -24,7 +24,7 @@ class CompanyView extends StatelessWidget {
                     'CNPJ: ${viewModel.companyProvider.company.cnpj}',
               ),
               SizedBox(height: 25),
-              Expenses()
+              Expenses(viewModel),
             ],
           ),
         ),

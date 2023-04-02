@@ -22,4 +22,28 @@ class CompanyProvider with ChangeNotifier {
 
     return Result.err(response.unwrapErr());
   }
+
+  Future<Result<void, AppError>> createItem(Item item) async {
+    final response = await _companyRepository.createItem(company.id, item);
+
+    if (response.isOk()) {
+      company.items.add(item);
+      notifyListeners();
+      return Result.ok(true);
+    }
+
+    return Result.err(response.unwrapErr());
+  }
+
+  Future<Result<void, AppError>> deleteItem(Item item) async {
+    final response = await _companyRepository.deleteItem(company.id, item.id);
+
+    if (response.isOk()) {
+      company.items.removeWhere((element) => element.id == item.id);
+      notifyListeners();
+      return Result.ok(true);
+    }
+
+    return Result.err(response.unwrapErr());
+  }
 }
