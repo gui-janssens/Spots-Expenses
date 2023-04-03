@@ -34,6 +34,7 @@ class CompanyViewModel extends BaseViewModel {
 
     if (result != null) {
       item.photoUrl = await result.ref.getDownloadURL();
+      item.photoKey = result.ref.fullPath;
     }
 
     final response = await companyProvider.createItem(item);
@@ -74,6 +75,11 @@ class CompanyViewModel extends BaseViewModel {
     if (!proceed) return;
 
     _interface.showLoader();
+
+    if (item.photoKey != null) {
+      await FirebaseStorageService.deleteFile(item.photoKey!);
+    }
+
     final response = await companyProvider.deleteItem(item);
     _interface.closeLoader();
 

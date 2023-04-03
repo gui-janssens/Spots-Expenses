@@ -17,4 +17,8 @@ class FirebaseStorageService {
 
     throw 'Image method not implemented';
   }
+
+  static Future<void> deleteFile(String ref) async {
+    await FirebaseStorage.instance.ref(ref).delete();
+  }
 }

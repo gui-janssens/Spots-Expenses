@@ -145,6 +145,7 @@ class _CreateNewItemDialogState extends State<CreateNewItemDialog> {
                   double.parse(unitPrice!),
                   int.parse(quantity!),
                   null,
+                  null,
                 );
 
                 widget.createItem(

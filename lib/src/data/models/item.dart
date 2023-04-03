@@ -6,8 +6,16 @@ class Item {
   final num averagePrice;
   final int quantity;
   String? photoUrl;
+  String? photoKey;
 
-  Item(this.id, this.name, this.averagePrice, this.quantity, this.photoUrl);
+  Item(
+    this.id,
+    this.name,
+    this.averagePrice,
+    this.quantity,
+    this.photoUrl,
+    this.photoKey,
+  );
 
   factory Item.fromDocument(DocumentSnapshot document) {
     dynamic map = document.data();
@@ -20,6 +28,7 @@ class Item {
         map['averagePrice'],
         map['quantity'],
         map['photoUrl'],
+        map['photoKey'],
       );
 
   Map<String, dynamic> toMap() {
@@ -29,6 +38,7 @@ class Item {
       'averagePrice': averagePrice,
       'quantity': quantity,
       'photoUrl': photoUrl,
+      'photoKey': photoKey,
     };
   }
 }
