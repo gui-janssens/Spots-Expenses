@@ -46,4 +46,17 @@ class CompanyProvider with ChangeNotifier {
 
     return Result.err(response.unwrapErr());
   }
+
+  Future<Result<void, AppError>> editItem(Item item) async {
+    final response = await _companyRepository.editItem(company.id, item);
+
+    if (response.isOk()) {
+      company.items[
+          company.items.indexWhere((element) => element.id == item.id)] = item;
+      notifyListeners();
+      return Result.ok(true);
+    }
+
+    return Result.err(response.unwrapErr());
+  }
 }

@@ -146,7 +146,8 @@ class _ExpensesState extends State<Expenses> {
                         ),
                         SizedBox(width: 7.5),
                         ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () => widget.viewModel.popRefillItemDialog(
+                              _companyProvider.company.items[index]),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.amber,
                           ),

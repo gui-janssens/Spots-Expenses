@@ -82,6 +82,7 @@ class _CreateNewItemDialogState extends State<CreateNewItemDialog> {
         ),
         CustomTextField(
           controller: MaskedTextController(mask: '00'),
+          hintText: '0',
           onChanged: (v) {
             if (v.isEmpty) {
               quantity = null;
@@ -170,8 +171,13 @@ class _CreateNewItemDialogState extends State<CreateNewItemDialog> {
       _interface.showErrorToast('Unit price is mandatory');
       return false;
     }
+
     if (quantity == null) {
       _interface.showErrorToast('Quantity is mandatory');
+      return false;
+    }
+    if (int.parse(quantity!) == 0) {
+      _interface.showErrorToast('Quantity should be greater than 0');
       return false;
     }
     return true;

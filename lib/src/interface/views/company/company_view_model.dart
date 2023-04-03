@@ -10,6 +10,7 @@ import '../../../data/providers/providers.dart';
 import '../../../data/services/firebase_storage_service.dart';
 import '../../utility/utility.dart';
 import 'widgets/create_new_item_dialog.dart';
+import 'widgets/refill_item_dialog.dart';
 
 class CompanyViewModel extends BaseViewModel {
   final companyProvider = CompanyProvider.instance;
@@ -86,5 +87,44 @@ class CompanyViewModel extends BaseViewModel {
     if (response.isErr()) {
       _interface.showErrorToast(response.unwrapErr().message);
     }
+  }
+
+  void popRefillItemDialog(Item item) {
+    _interface.showCustomDialog(
+      widget: RefillItemDialog(
+        onRefill: (quantity, unitPrice) =>
+            refillItem(item, quantity, unitPrice),
+      ),
+    );
+  }
+
+  void refillItem(Item item, int quantity, double unitPrice) async {
+    _interface.showLoader();
+
+    final newAveragePrice =
+        (item.averagePrice * item.quantity + quantity * unitPrice) /
+            (item.quantity + quantity);
+
+    final newQuantity = item.quantity + quantity;
+
+    var editedItem = Item(
+      item.id,
+      item.name,
+      newAveragePrice,
+      newQuantity,
+      item.photoUrl,
+      item.photoKey,
+    );
+
+    final response = await companyProvider.editItem(editedItem);
+
+    _interface.closeLoader();
+
+    if (response.isOk()) {
+      _interface.goBack();
+      return;
+    }
+
+    _interface.showErrorToast(response.unwrapErr().message);
   }
 }

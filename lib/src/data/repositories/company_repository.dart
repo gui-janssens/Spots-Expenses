@@ -16,7 +16,6 @@ abstract class CompanyRepository {
 
   Future<Result<void, AppError>> editItem(
     String companyId,
-    String itemId,
     Item item,
   );
 
@@ -130,8 +129,7 @@ class CompanyRepositoryImpl implements CompanyRepository {
   }
 
   @override
-  Future<Result<void, AppError>> editItem(
-      String companyId, String itemId, Item item) async {
+  Future<Result<void, AppError>> editItem(String companyId, Item item) async {
     try {
       final document =
           await _firestore.collection(_collectionPath).doc(companyId).get();
