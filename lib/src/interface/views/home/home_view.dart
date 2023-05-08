@@ -23,8 +23,8 @@ class HomeView extends StatelessWidget {
                 height: double.infinity,
                 width: double.infinity,
                 child: Center(
-                    child:
-                        Text(AssociatesProvider.instance.associates[0].name)),
+                  child: Text(AssociatesProvider.instance.associates[0].name),
+                ),
               ),
               Center(
                 child: Text(AssociatesProvider.instance.associates[1].name),
