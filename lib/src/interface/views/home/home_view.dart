@@ -14,29 +14,30 @@ class HomeView extends StatelessWidget {
     return ViewModelBuilder<HomeViewModel>.reactive(
       viewModelBuilder: () => HomeViewModel(),
       builder: (context, viewModel, child) => Scaffold(
-          appBar: CustomAppBar(viewModel),
-          body: IndexedStack(
-            index: viewModel.selectedIndex,
-            children: [
-              CompanyView(),
-              SizedBox(
-                height: double.infinity,
-                width: double.infinity,
-                child: Center(
-                  child: Text(AssociatesProvider.instance.associates[0].name),
-                ),
+        appBar: CustomAppBar(viewModel),
+        body: IndexedStack(
+          index: viewModel.selectedIndex,
+          children: [
+            CompanyView(),
+            SizedBox(
+              height: double.infinity,
+              width: double.infinity,
+              child: Center(
+                child: Text(AssociatesProvider.instance.associates[0].name),
               ),
-              Center(
-                child: Text(AssociatesProvider.instance.associates[1].name),
-              ),
-              Center(
-                child: Text(AssociatesProvider.instance.associates[2].name),
-              ),
-              Center(
-                child: Text(AssociatesProvider.instance.associates[3].name),
-              ),
-            ],
-          )),
+            ),
+            Center(
+              child: Text(AssociatesProvider.instance.associates[1].name),
+            ),
+            Center(
+              child: Text(AssociatesProvider.instance.associates[2].name),
+            ),
+            Center(
+              child: Text(AssociatesProvider.instance.associates[3].name),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

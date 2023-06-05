@@ -122,23 +122,23 @@ class _ExpensesState extends State<Expenses> {
       body: Column(
         children: List<Widget>.generate(_companyProvider.company.items.length,
                 (index) {
+              final item = _companyProvider.company.items[index];
               return Column(
                 children: [
                   ListTile(
-                    leading:
-                        _companyProvider.company.items[index].photoUrl != null
-                            ? Image.network(
-                                _companyProvider.company.items[index].photoUrl!)
-                            : null,
-                    title: Text(_companyProvider.company.items[index].name),
+                    leading: item.photoUrl != null
+                        ? Image.network(item.photoUrl!)
+                        : null,
+                    title: Text(item.name),
                     subtitle: Text(
-                      'In stock: ${_companyProvider.company.items[index].quantity}\nCurrent price: R\$ ${_companyProvider.company.items[index].averagePrice.toStringAsFixed(2).replaceAll('.', ',')}',
+                      'In stock: ${item.quantity}\nCurrent price: R\$ ${item.averagePrice.toStringAsFixed(2).replaceAll('.', ',')}',
                     ),
                     trailing: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () =>
+                              widget.viewModel.popConsumeItemDialog(item),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: AppColors.primary,
                           ),
@@ -146,8 +146,8 @@ class _ExpensesState extends State<Expenses> {
                         ),
                         SizedBox(width: 7.5),
                         ElevatedButton(
-                          onPressed: () => widget.viewModel.popRefillItemDialog(
-                              _companyProvider.company.items[index]),
+                          onPressed: () =>
+                              widget.viewModel.popRefillItemDialog(item),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.amber,
                           ),
@@ -155,12 +155,16 @@ class _ExpensesState extends State<Expenses> {
                         ),
                         SizedBox(width: 7.5),
                         TextButton(
-                          onPressed: () => widget.viewModel.deleteItem(
-                              _companyProvider.company.items[index]),
-                          child: Text(
-                            'Delete',
-                            style: TextStyle(color: Colors.red),
-                          ),
+                          onPressed: () => widget.viewModel.deleteItem(item),
+                          child: widget.viewModel.deletingItemId == item.id
+                              ? CircularProgressIndicator(
+                                  valueColor:
+                                      AlwaysStoppedAnimation(Colors.red),
+                                )
+                              : Text(
+                                  'Delete',
+                                  style: TextStyle(color: Colors.red),
+                                ),
                         )
                       ],
                     ),

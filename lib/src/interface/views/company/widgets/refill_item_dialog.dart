@@ -1,16 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_masked_text2/flutter_masked_text2.dart';
+import 'package:spots_expenses/src/data/models/models.dart';
+import 'package:spots_expenses/src/data/providers/providers.dart';
 
 import '../../../utility/utility.dart';
 import '../../../widgets/widgets.dart';
 
-class RefillItemDialog extends StatelessWidget {
-  final Function(int, double) onRefill;
+class RefillItemDialog extends StatefulWidget {
+  final Item item;
+  RefillItemDialog(this.item, {super.key});
 
-  RefillItemDialog({super.key, required this.onRefill});
+  @override
+  State<RefillItemDialog> createState() => _RefillItemDialogState();
+}
 
+class _RefillItemDialogState extends State<RefillItemDialog> {
   final MaskedTextController _quantityController =
       MaskedTextController(mask: '00');
+
   final MoneyMaskedTextController _unitPriceController =
       MoneyMaskedTextController(
     leftSymbol: 'R\$',
@@ -18,6 +25,14 @@ class RefillItemDialog extends StatelessWidget {
     thousandSeparator: '.',
     initialValue: 0,
   );
+
+  bool isRefilling = false;
+
+  setIsRefilling(bool b) {
+    isRefilling = b;
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -63,7 +78,8 @@ class RefillItemDialog extends StatelessWidget {
             onPressed: () {
               if (!validateFields()) return;
 
-              onRefill(
+              refillItem(
+                widget.item,
                 int.parse(_quantityController.text),
                 double.parse(_unitPriceController.text
                     .replaceAll('R\$', '')
@@ -72,14 +88,48 @@ class RefillItemDialog extends StatelessWidget {
                     .replaceAll(',', '.')),
               );
             },
-            child: Text(
-              'Refill item',
-              style: TextStyle(color: Colors.white),
-            ),
+            child: isRefilling
+                ? CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation(Colors.white),
+                  )
+                : Text(
+                    'Refill item',
+                    style: TextStyle(color: Colors.white),
+                  ),
           ),
         ),
       ],
     );
+  }
+
+  void refillItem(Item item, int quantity, double unitPrice) async {
+    setIsRefilling(true);
+
+    final newAveragePrice =
+        (item.averagePrice * item.quantity + quantity * unitPrice) /
+            (item.quantity + quantity);
+
+    final newQuantity = item.quantity + quantity;
+
+    var editedItem = Item(
+      item.id,
+      item.name,
+      newAveragePrice,
+      newQuantity,
+      item.photoUrl,
+      item.photoKey,
+    );
+
+    final response = await CompanyProvider.instance.editItem(editedItem);
+
+    setIsRefilling(false);
+
+    if (response.isOk()) {
+      InterfaceUtility.instance.goBack();
+      return;
+    }
+
+    InterfaceUtility.instance.showErrorToast(response.unwrapErr().message);
   }
 
   bool validateFields() {
